@@ -14,16 +14,38 @@ local water_level = tonumber(minetest.get_mapgen_setting("water_level"))
 do
 	local spflags = minetest.get_mapgen_setting("mgv6_spflags")
 	spflags = string.split(spflags, ",", false)
+
 	for i, v in ipairs(spflags) do
 		-- force snow biomes off
-		if v:find("snowbiomes") then
+		if v == "snowbiomes" then
 			spflags[i] = "nosnowbiomes"
 		end
-		-- disable temples too, if the engine supports it (5.9.0)
-		if v:find("temples") then
+
+		-- disable temples
+		if v == "temples" then
 			spflags[i] = "notemples"
 		end
+
+		-- disable default v6 trees
+		if v == "trees" then
+			spflags[i] = "notrees"
+		end
 	end
+
+	-- Make sure trees are disabled even if "trees" wasn't present
+	local has_notrees = false
+
+	for _, v in ipairs(spflags) do
+		if v == "notrees" then
+			has_notrees = true
+			break
+		end
+	end
+
+	if not has_notrees then
+		table.insert(spflags, "notrees")
+	end
+
 	spflags = table.concat(spflags, ",")
 	minetest.set_mapgen_setting("mgv6_spflags", spflags, true)
 end

@@ -99,62 +99,141 @@ default.make_tree = function(vm, p0, is_apple_tree)
 	local n_leaves = {name = "default:leaves"}
 	local n_apple = {name = "default:apple"}
 
-	local trunk_h = math.random(4, 5)
-	local p1 = p0
-	for ii = 1, trunk_h do
+	-- Random tree height
+	local trunk_h = math.random(4, 6)
+
+	-- Main trunk
+	local p1 = vector.new(p0.x, p0.y, p0.z)
+
+	for i = 1, trunk_h do
 		vm:set_node_at(p1, n_tree)
 		p1.y = p1.y + 1
 	end
 
-	-- p1 is now the last piece of the trunk
+	-- Top of the trunk
 	p1.y = p1.y - 1
 
-	local leaves_a = VoxelArea:new({MinEdge = vector.new(-2,-1,-2),
-		MaxEdge = vector.new(2,1,2)})
-	local leaves_d = {}
+	-- Place a leaf if the position is free
+	local function place_leaf(x, y, z)
+		local p = {
+			x = p1.x + x,
+			y = p1.y + y,
+			z = p1.z + z
+		}
 
-	-- Force leaves near the end of the trunk
-	local d = 1
-	for z = -d, d do
-	for y = -d, d do
-	for x = -d, d do
-		leaves_d[leaves_a:index(x, y, z)] = true
-	end
-	end
-	end
-
-	-- Add leaves randomly
-	for iii = 1, 7 do
-		local p = vector.combine(leaves_a.MinEdge, vector.add(leaves_a.MaxEdge, -d), math.random)
-
-		for z = 0, d do
-		for y = 0, d do
-		for x = 0, d do
-			leaves_d[leaves_a:index(p.x + x, p.y + y, p.z + z)] = true
-		end
-		end
-		end
-	end
-
-	-- Blit leaves to vmanip
-	for z = leaves_a.MinEdge.z, leaves_a.MaxEdge.z do
-	for y = leaves_a.MinEdge.y, leaves_a.MaxEdge.y do
-	for x = leaves_a.MinEdge.x, leaves_a.MaxEdge.x do
-		local p = vector.add(vector.new(x, y, z), p1)
 		local node = vm:get_node_at(p)
+
 		if node.name == "air" or node.name == "ignore" then
-			if leaves_d[leaves_a:index(x, y, z)] then
-				if is_apple_tree and math.random(0, 99) < 10 then
-					vm:set_node_at(p, n_apple)
-				else
-					vm:set_node_at(p, n_leaves)
+			if is_apple_tree and math.random(0, 99) < 10 then
+				vm:set_node_at(p, n_apple)
+			else
+				vm:set_node_at(p, n_leaves)
+			end
+		end
+	end
+
+	-- Short side branches
+	if trunk_h >= 5 then
+		if math.random(0, 99) < 45 then
+			vm:set_node_at({
+				x = p1.x + 1,
+				y = p1.y - 2,
+				z = p1.z
+			}, n_tree)
+
+			place_leaf(2, -2, 0)
+			place_leaf(1, -2, 1)
+			place_leaf(1, -2, -1)
+		end
+
+		if math.random(0, 99) < 45 then
+			vm:set_node_at({
+				x = p1.x - 1,
+				y = p1.y - 2,
+				z = p1.z
+			}, n_tree)
+
+			place_leaf(-2, -2, 0)
+			place_leaf(-1, -2, 1)
+			place_leaf(-1, -2, -1)
+		end
+
+		if math.random(0, 99) < 35 then
+			vm:set_node_at({
+				x = p1.x,
+				y = p1.y - 2,
+				z = p1.z + 1
+			}, n_tree)
+
+			place_leaf(0, -2, 2)
+			place_leaf(1, -2, 1)
+			place_leaf(-1, -2, 1)
+		end
+
+		if math.random(0, 99) < 35 then
+			vm:set_node_at({
+				x = p1.x,
+				y = p1.y - 2,
+				z = p1.z - 1
+			}, n_tree)
+
+			place_leaf(0, -2, -2)
+			place_leaf(1, -2, -1)
+			place_leaf(-1, -2, -1)
+		end
+	end
+
+	-- Lower canopy
+	for x = -2, 2 do
+		for z = -2, 2 do
+			if math.abs(x) + math.abs(z) <= 3 then
+				place_leaf(x, -1, z)
+			end
+		end
+	end
+
+	-- Middle canopy
+	for x = -2, 2 do
+		for z = -2, 2 do
+			if math.abs(x) + math.abs(z) <= 3 then
+				if math.random(0, 99) < 90 then
+					place_leaf(x, 0, z)
 				end
 			end
 		end
 	end
+
+	-- Upper canopy
+	for x = -1, 1 do
+		for z = -1, 1 do
+			if math.random(0, 99) < 90 then
+				place_leaf(x, 1, z)
+			end
+		end
 	end
+
+	-- Tree top
+	place_leaf(0, 2, 0)
+
+	-- Small random extensions
+	if math.random(0, 99) < 50 then
+		place_leaf(-2, 0, 0)
+	end
+
+	if math.random(0, 99) < 50 then
+		place_leaf(2, 0, 0)
+	end
+
+	if math.random(0, 99) < 50 then
+		place_leaf(0, 0, -2)
+	end
+
+	if math.random(0, 99) < 50 then
+		place_leaf(0, 0, 2)
 	end
 end
+
+
 
 minetest.register_abm({
 	label = "Saplings",
