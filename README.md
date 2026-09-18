@@ -1,33 +1,88 @@
-# Minetest Classic
+# Minetest Classic Plus
 
-[![ContentDB](https://content.luanti.org/packages/sfan5/minetest_classic/shields/downloads/)](https://content.luanti.org/packages/sfan5/minetest_classic/)
+Minetest Classic Plus is a classic-style sandbox game based on [Minetest Classic](https://github.com/sfan5/minetest_classic).
 
-This game is a recreation of the classic Minetest-c55 0.3 gameplay, including:
+It keeps the simple, old-school sandbox gameplay of Minetest Classic while adding new world generation, building features, vegetation and exploration elements.
 
-* Original textures
-* All four mobs¹
-* Identical items, crafting recipes, dig times; closely matched ore distribution
+The goal is to create a calm, simple and exploration-focused sandbox experience without turning the game into a collection of modern features.
 
-Unlike the original it has (optional) support for:
+Classic Plus currently uses the classic `v6` map generator as its foundation.
 
-* Sounds
-* PvP
-* Localization
-* Engine features such as the modern skybox, waving or shadows
-* Modern creative inventory and per-player creative mode
+Additional Lua-based generation systems are used to add features such as:
 
-To control some of the modern features check out "Modernize flags" in the settings menu.
-For an experience faithful to 0.3 you should disable Fancy leaves and 3D Clouds on your client.
+* Custom trees
+* Snowy Forests
+* Millenary Villages
+* Tall Grass
 
-This is a game for the [Luanti engine](https://www.luanti.org/), install
-at least version 5.6.0 to play it.
+This keeps the underlying world generation simple while allowing Classic Plus to expand it.
 
-**¹**: Fireflies do not spawn naturally and are only available in creative mode.
+## Design Philosophy
+
+Classic Plus focuses on:
+
+* Exploration
+* Building
+* Creativity
+* Simple mechanics
+* Discovering unusual places
+* A quiet old-school atmosphere
+
+The intention is to expand the classic sandbox experience without overwhelming it with large numbers of unrelated modern systems.
+
+## Installation
+
+### Luanti
+
+Classic Plus can be installed as a game in the Luanti `games` directory.
+
+For development, clone the repository:
+
+```bash
+git clone https://github.com/alexvozza2012-droid/minetest_classic_plus.git
+```
+
+Then place the game in your Luanti games directory.
+
+Classic Plus requires a Luanti version compatible with the version specified in `game.conf`.
+
+## Development
+
+The project is written primarily in Lua and is designed as a game for the Luanti engine.
+
+The repository contains the game's mods, world generation and configuration.
+
+The engine itself is not included in this repository.
+
+## Based on Minetest Classic
+
+Minetest Classic Plus is a fork of [Minetest Classic](https://github.com/sfan5/minetest_classic) by sfan5 and the Minetest Classic contributors.
+
+Classic Plus retains original components and media from Minetest Classic. Their original license and attribution information are preserved in the repository.
+
+See:
+
+* `LICENSE.md`
+* `mods/cl_default/LICENSE.txt`
+* `mods/creative/LICENSE.txt`
+* `mods/sfinv/LICENSE.txt`
+
+Individual components may have different licenses. Refer to their respective license files for the applicable terms.
 
 ## Credits
 
-Thanks to Perttu Ahola (celeron55) `<celeron55@gmail.com>` and other random contributors
-for making Minetest-c55 0.3 what it is.
+### Minetest Classic
 
-This game was written by sfan5 `<sfan5@live.de>` in exactly three weeks up to
-the initial commit in this git repo.
+* sfan5
+* celeron55
+* Minetest Classic contributors
+
+Classic Plus also contains original work created for this project, including its custom world-generation systems, doors, slabs, Millenary Villages, Snowy Forest and Tall Grass.
+
+## License
+
+Minetest Classic Plus contains components originating from Minetest Classic with their respective original licenses and attribution requirements.
+
+Do not assume that a single license applies to every file in this repository.
+
+Refer to the individual license files for the exact terms applying to each component and media file.
