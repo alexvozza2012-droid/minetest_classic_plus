@@ -1,6 +1,6 @@
-dofile(minetest.get_modpath("sfinv") .. "/api.lua")
+dofile(minetest.get_modpath("cl_sfinv") .. "/api.lua")
 
-local S = minetest.get_translator("sfinv")
+local S = minetest.get_translator("cl_sfinv")
 
 sfinv.register_page("sfinv:crafting", {
 	title = S("Crafting"),

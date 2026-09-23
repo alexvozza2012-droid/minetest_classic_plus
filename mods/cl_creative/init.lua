@@ -2,7 +2,7 @@
 
 creative = {}
 
-local S = minetest.get_translator("creative")
+local S = minetest.get_translator("cl_creative")
 creative.get_translator = S
 
 local function update_sfinv(name)
@@ -37,7 +37,7 @@ function minetest.is_creative_enabled(name)
 		old_is_creative_enabled(name)
 end
 
-dofile(minetest.get_modpath("creative") .. "/inventory.lua")
+dofile(minetest.get_modpath("cl_creative") .. "/inventory.lua")
 
 -- Unlimited node placement
 minetest.register_on_placenode(function(pos, newnode, placer, oldnode, itemstack)

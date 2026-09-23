@@ -27,4 +27,4 @@ ignore = {
 
 -- Overwrites fields in minetest
 files["mods/cl_default/init.lua"].globals = { "minetest", "core" }
-files["mods/creative/init.lua"].globals = { "minetest", "core" }
+mods/cl_creative/init.lua

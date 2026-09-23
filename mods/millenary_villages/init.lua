@@ -2,7 +2,7 @@
 -- MILLENARY VILLAGES
 -- Minetest Classic Plus
 --------------------------------------------------
-
+local S = minetest.get_translator("millenary_villages")
 
 --------------------------------------------------
 -- CERCA TERRENO PIANEGGIANTE
@@ -764,7 +764,7 @@ minetest.register_chatcommand(
     {
 
         description =
-            "Genera un villaggio millenario vicino al giocatore",
+            S("Generate a millenary village near the player"),
 
 
         privs = {
@@ -783,7 +783,7 @@ minetest.register_chatcommand(
             if not player then
 
                 return false,
-                    "Giocatore non trovato."
+                    S("Player not found.")
             end
 
 
@@ -808,7 +808,7 @@ minetest.register_chatcommand(
 
 
             return true,
-                "Villaggio millenario generato davanti a te!"
+                S("Millenary village generated in front of you!")
 
         end
     }
